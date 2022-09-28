@@ -1,166 +1,221 @@
 <?php
-require ('../includes/PHPMailer.php');
-require ('../includes/SMTP.php');
-require ('../includes/Exception.php');         
-require ('../includes/passwordsq.php');         
+require('../includes/PHPMailer.php');
+require('../includes/SMTP.php');
+require('../includes/Exception.php');
+require('../includes/passwordsq.php');
 //defining name spacess
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+
 include("functions.php");
 sleep(3);
 if (isset($_POST)) {
-	$firstname = filterString($_POST['firstname']); $middlename = filterString($_POST['middlename']); 
-	$lastname = filterString($_POST['lastname']); $state = filterString($_POST['stateId']);
-	$country = filterString($_POST['countryId']); $city = filterString($_POST['cityId']);
-	$zipcode = filterString($_POST['zipcode']); $dob = filterString($_POST['dob']);
-	$address = filterString($_POST['address']); $phone = filterString($_POST['phone']);
-	$email = filterString($_POST['email']); $accountnumber = filterString($_POST['accountnumber']);
-	$accounttype = filterString($_POST['accounttype']); $usercurrency = filterString($_POST['usercurrency']);
-	$accountbalance = filterString($_POST['accountbalance']); $imf = filterString($_POST['imf']);
-	$cot = filterString($_POST['cot']); $secretCode = filterString($_POST['secretCode']);
-	$password = filterString($_POST['password']); $cpassword = filterString($_POST['cpassword']);
+  $firstname = filterString($_POST['firstname']);
+  $middlename = filterString($_POST['middlename']);
+  $lastname = filterString($_POST['lastname']);
+  $state = filterString($_POST['stateId']);
+  $country = filterString($_POST['countryId']);
+  $city = filterString($_POST['cityId']);
+  $zipcode = filterString($_POST['zipcode']);
+  $dob = filterString($_POST['dob']);
+  $address = filterString($_POST['address']);
+  $phone = filterString($_POST['phone']);
+  $email = filterString($_POST['email']);
+  $accountnumber = filterString($_POST['accountnumber']);
+  $accounttype = filterString($_POST['accounttype']);
+  $usercurrency = filterString($_POST['usercurrency']);
+  $accountbalance = filterString($_POST['accountbalance']);
+  $imf = filterString($_POST['imf']);
+  $cot = filterString($_POST['cot']);
+  $secretCode = filterString($_POST['secretCode']);
+  $password = filterString($_POST['password']);
+  $cpassword = filterString($_POST['cpassword']);
   $daily_limit = filterString($_POST['daily_limit']);
 
-if(empty($firstname)){
-	echo"<script>document.getElementById('firstname').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('firstname').style.borderColor='green';</script>";}
+  if (empty($firstname)) {
+    echo "<script>document.getElementById('firstname').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('firstname').style.borderColor='green';</script>";
+  }
 
-if(empty($daily_limit)){
-	echo"<script>document.getElementById('daily_limit').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('daily_limit').style.borderColor='green';</script>";}
+  if (empty($daily_limit)) {
+    echo "<script>document.getElementById('daily_limit').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('daily_limit').style.borderColor='green';</script>";
+  }
 
-if(empty($middlename)){
-	echo"<script>document.getElementById('middlename').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('middlename').style.borderColor='green';</script>";}
-if(empty($lastname)){
-	echo"<script>document.getElementById('lastname').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('lastname').style.borderColor='green';</script>";}
-if(empty($state)){
-	echo"<script>document.getElementById('stateId').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('stateId').style.borderColor='green';</script>";}
-if(empty($country)){
-	echo"<script>document.getElementById('countryId').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('countryId').style.borderColor='green';</script>";}
-if(empty($city)){
-	echo"<script>document.getElementById('cityId').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('cityId').style.borderColor='green';</script>";}
-if(empty($zipcode)){
-	echo"<script>document.getElementById('zipcode').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('zipcode').style.borderColor='green';</script>";}
-if(empty($dob)){
-	echo"<script>document.getElementById('dob').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('dob').style.borderColor='green';</script>";}
-if(empty($address)){
-	echo"<script>document.getElementById('address').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('address').style.borderColor='green';</script>";}
-if(empty($phone)){
-	echo"<script>document.getElementById('phone').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('phone').style.borderColor='green';</script>";}
-if(empty($email)){
-	echo"<script>document.getElementById('email').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('email').style.borderColor='green';</script>";}
-if(empty($accountnumber)){
-	echo"<script>document.getElementById('accountnumber').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('accountnumber').style.borderColor='green';</script>";}
-if(empty($accounttype)){
-	echo"<script>document.getElementById('accounttype').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('accounttype').style.borderColor='green';</script>";}
-if(empty($usercurrency)){
-	echo"<script>document.getElementById('usercurrency').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('usercurrency').style.borderColor='green';</script>";}
-if(empty($accountbalance)){
-	echo"<script>document.getElementById('accountbalance').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('accountbalance').style.borderColor='green';</script>";}
-if(empty($imf)){
-	echo"<script>document.getElementById('imf').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('imf').style.borderColor='green';</script>";}
-if(empty($cot)){
-	echo"<script>document.getElementById('cot').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('cot').style.borderColor='green';</script>";}
-if(empty($secretCode)){
-	echo"<script>document.getElementById('secretCode').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('secretCode').style.borderColor='green';</script>";}
-if(empty($password)){
-	echo"<script>document.getElementById('password').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('password').style.borderColor='green';</script>";}
-if(empty($cpassword)){
-	echo"<script>document.getElementById('cpassword').style.borderColor='red';</script>";
-}else{echo"<script>document.getElementById('cpassword').style.borderColor='green';</script>";}
-     
-   if(empty($firstname) || empty($lastname) || empty($middlename) || empty($state) || empty($country) || empty($city) || empty($zipcode) || empty($dob) || empty($address) ||empty($phone) || empty($email) ||empty($accountnumber) ||empty($accounttype) || empty($usercurrency) || empty($accountbalance) || empty($imf) || empty($cot) || empty($secretCode) || empty($password) || empty($cpassword)){
-   	  echo "<script>
+  // if(empty($middlename)){
+  // 	echo"<script>document.getElementById('middlename').style.borderColor='red';</script>";
+  // }else{echo"<script>document.getElementById('middlename').style.borderColor='green';</script>";}
+
+
+  if (empty($lastname)) {
+    echo "<script>document.getElementById('lastname').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('lastname').style.borderColor='green';</script>";
+  }
+  if (empty($state)) {
+    echo "<script>document.getElementById('stateId').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('stateId').style.borderColor='green';</script>";
+  }
+  if (empty($country)) {
+    echo "<script>document.getElementById('countryId').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('countryId').style.borderColor='green';</script>";
+  }
+  if (empty($city)) {
+    echo "<script>document.getElementById('cityId').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('cityId').style.borderColor='green';</script>";
+  }
+  if (empty($zipcode)) {
+    echo "<script>document.getElementById('zipcode').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('zipcode').style.borderColor='green';</script>";
+  }
+  if (empty($dob)) {
+    echo "<script>document.getElementById('dob').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('dob').style.borderColor='green';</script>";
+  }
+  if (empty($address)) {
+    echo "<script>document.getElementById('address').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('address').style.borderColor='green';</script>";
+  }
+  if (empty($phone)) {
+    echo "<script>document.getElementById('phone').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('phone').style.borderColor='green';</script>";
+  }
+  if (empty($email)) {
+    echo "<script>document.getElementById('email').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('email').style.borderColor='green';</script>";
+  }
+  if (empty($accountnumber)) {
+    echo "<script>document.getElementById('accountnumber').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('accountnumber').style.borderColor='green';</script>";
+  }
+  if (empty($accounttype)) {
+    echo "<script>document.getElementById('accounttype').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('accounttype').style.borderColor='green';</script>";
+  }
+  if (empty($usercurrency)) {
+    echo "<script>document.getElementById('usercurrency').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('usercurrency').style.borderColor='green';</script>";
+  }
+  if (empty($accountbalance)) {
+    echo "<script>document.getElementById('accountbalance').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('accountbalance').style.borderColor='green';</script>";
+  }
+  if (empty($imf)) {
+    echo "<script>document.getElementById('imf').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('imf').style.borderColor='green';</script>";
+  }
+  if (empty($cot)) {
+    echo "<script>document.getElementById('cot').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('cot').style.borderColor='green';</script>";
+  }
+  if (empty($secretCode)) {
+    echo "<script>document.getElementById('secretCode').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('secretCode').style.borderColor='green';</script>";
+  }
+  if (empty($password)) {
+    echo "<script>document.getElementById('password').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('password').style.borderColor='green';</script>";
+  }
+  if (empty($cpassword)) {
+    echo "<script>document.getElementById('cpassword').style.borderColor='red';</script>";
+  } else {
+    echo "<script>document.getElementById('cpassword').style.borderColor='green';</script>";
+  }
+
+  if (empty($firstname) || empty($lastname) || empty($middlename) || empty($state) || empty($country) || empty($city) || empty($zipcode) || empty($dob) || empty($address) || empty($phone) || empty($email) || empty($accountnumber) || empty($accounttype) || empty($usercurrency) || empty($accountbalance) || empty($imf) || empty($cot) || empty($secretCode) || empty($password) || empty($cpassword)) {
+    echo "<script>
                Swal.fire('All fields are required!', 'Kindly fill in all empty fields with the appropriate details.', 'error');
       </script>";
-      die();
-   }
-   $errorMsg = 0;
-   if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-   	 echo "
+    die();
+  }
+  $errorMsg = 0;
+  if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo "
             <script>    
               document.getElementById('green').style.borderColor='red';
              </script>";
-    }
-    }else{ 
-    $errorMsg = 1;
-    echo "
+  }
+} else {
+  $errorMsg = 1;
+  echo "
             <script>    
               toastr.error('A valid email address is required!', 'Invalid email', {\"progressBar\": true});
               document.getElementById('email').style.borderColor='red';
              </script>";
-    }
+}
 
-    if($password != $cpassword){
-    	$errorMsg = 1;
-    	echo "
+if ($password != $cpassword) {
+  $errorMsg = 1;
+  echo "
             <script>    
               toastr.error('Password does not match!', 'Invalid password combination', {\"progressBar\": true});
               document.getElementById('cpassword').style.borderColor='red';
              </script>";
-          }
+}
 
-     if($errorMsg == 0){
-     	// $pass = md5($password);
-       ///Email and Salt
-       $res = encryptData($password);  
-       $pass = $res['enc_text'];
-       $salt= $res['salt'];
-     	$dated = date(" d M Y H:i a");
-    $query = $conn->query("INSERT INTO users (firstname, lastname, middlename, state, country, city, zipcode, dob, address, phone, email, accountnumber, accounttype, usercurrency, accountbalance, imf, cot, secretCode, password, salt, approve, status, datecreated,daily_limit) VALUES 
+if ($errorMsg == 0) {
+  // $pass = md5($password);
+  ///Email and Salt
+  $res = encryptData($password);
+  $pass = $res['enc_text'];
+  $salt = $res['salt'];
+  $dated = date(" d M Y H:i a");
+  $query = $conn->query("INSERT INTO users (firstname, lastname, middlename, state, country, city, zipcode, dob, address, phone, email, accountnumber, accounttype, usercurrency, accountbalance, imf, cot, secretCode, password, salt, approve, status, datecreated,daily_limit) VALUES 
     ('$firstname', '$middlename', '$lastname', '$state', '$country', '$city', '$zipcode', '$dob', 
     '$address', '$phone', '$email', '$accountnumber', '$accounttype', '$usercurrency', '$accountbalance', '$imf', '$cot', '$secretCode', '$pass', '$salt', '1', 'active', '$dated','$daily_limit')");
 
-      echo mysqli_error($conn);
+  echo mysqli_error($conn);
 
-$query = $conn->query("SELECT * FROM users WHERE accountnumber = '$accountnumber'");
-$r = mysqli_fetch_array($query);
-$email = $r['email'];
-$fname = $r['firstname'];
-$mname = $r['middlename'];
-$lname = $r['lastname'];
-$accounttype = $r['accounttype'];
-$date = $r['datecreated'];
-$currency = $r['usercurrency'];
-$addressB = $r['address'];
-$id = $r['id'];
-$auth_code = randomNumber(4);
-$link = $_SERVER['HTTP_HOST']; $num = randomString(56); $addr = "/secure/confirm-email.php?source=$num";
-$auth_url = "$link$addr";
-$mail = new PHPMailer();
-$mail->isSMTP();
-$mail->Host = $smtp_host;
-$mail->SMTPAuth = true;
-$mail->CharSet = "UTF-8";
-$mail->Username = $smtp_username; 
-$mail->Password = $smtp_password;
-$mail->SMTPSecure = $smtp_auth;
-$mail->Port = $smtp_port;
-$mail->setFrom($smtp_username, $display_name);
-$mail->addReplyTo($smtp_username, $display_name);
-$mail->addAddress($email);
-$mail->Subject = "Email confirmation";
-$mail->isHTML(true);
-$mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  $query = $conn->query("SELECT * FROM users WHERE accountnumber = '$accountnumber'");
+  $r = mysqli_fetch_array($query);
+  $email = $r['email'];
+  $fname = $r['firstname'];
+  $mname = $r['middlename'];
+  $lname = $r['lastname'];
+  $accounttype = $r['accounttype'];
+  $date = $r['datecreated'];
+  $currency = $r['usercurrency'];
+  $addressB = $r['address'];
+  $id = $r['id'];
+  $auth_code = randomNumber(4);
+  $link = $_SERVER['HTTP_HOST'];
+  $num = randomString(56);
+  $addr = "/secure/confirm-email.php?source=$num";
+  $auth_url = "$link$addr";
+  $mail = new PHPMailer();
+  $mail->isSMTP();
+  $mail->Host = $smtp_host;
+  $mail->SMTPAuth = true;
+  $mail->CharSet = "UTF-8";
+  $mail->Username = $smtp_username;
+  $mail->Password = $smtp_password;
+  $mail->SMTPSecure = $smtp_auth;
+  $mail->Port = $smtp_port;
+  $mail->setFrom($smtp_username, $display_name);
+  $mail->addReplyTo($smtp_username, $display_name);
+  $mail->addAddress($email);
+  $mail->Subject = "Email confirmation";
+  $mail->isHTML(true);
+  $mail->Body = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -551,8 +606,8 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
           <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
               <td class="email-masthead">
-               <a href="'.$site_url.'" class="">
-                <img src="'.$emaillogo.'" class="email-masthead_logo">
+               <a href="' . $site_url . '" class="">
+                <img src="' . $emaillogo . '" class="email-masthead_logo">
               </a>
               </td>
             </tr>
@@ -571,7 +626,7 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
-                       <h1>Hi '.$fname.' '.$lname.' '. $mname.',</h1>
+                       <h1>Hi ' . $fname . ' ' . $lname . ' ' . $mname . ',</h1>
                         <p>Thank you so much for allowing us to help you with your recent account opening. We are committed to providing our customers with the highest level of service and the most innovative banking products possible.
                           </p>
                           <p>We are very glad you chose us as your financial institution and hope you will take advantage of our wide variety of savings, investment and loan products, all designed to meet your specific needs.
@@ -584,7 +639,7 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
                                 <tr>
                                   <td align="center">
-                                    <a href="'.$auth_url.'" class="f-fallback button button--blue" target="_blank">confirm email</a>
+                                    <a href="' . $auth_url . '" class="f-fallback button button--blue" target="_blank">confirm email</a>
                                   </td>
                                 </tr>
                               </table>
@@ -592,28 +647,28 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
                           </tr>
                         </table>
                          <p><b style="text-center">Details of your new account are shown below;</b></p>
-                            <b>Account name: '.$fname.' '.$lname.' '.$mname.'</b><br>
-                             <b>Account Number: '.$accountnumber.'</b><br>
-                             <b>Account Type: '.$accounttype.'</b><br>
-                             <b>Account currency: '.$currency.'</b><br>
-                             <b>Address: '.$addressB.'</b><br>
-                             <b>Date : '.date("d M Y, H:i a").'</b><br>
+                            <b>Account name: ' . $fname . ' ' . $lname . ' ' . $mname . '</b><br>
+                             <b>Account Number: ' . $accountnumber . '</b><br>
+                             <b>Account Type: ' . $accounttype . '</b><br>
+                             <b>Account currency: ' . $currency . '</b><br>
+                             <b>Address: ' . $addressB . '</b><br>
+                             <b>Date : ' . date("d M Y, H:i a") . '</b><br>
                              <hr>
                              <p><b style="text-center">Online banking credentials</b></p>
-                            <b>Account ID: '.$accountnumber.'</b><br>
-                             <b>Password: '.$cpassword.'</b><br>
-                             <b>Secret Code: '.$secretCode.'</b><br>
+                            <b>Account ID: ' . $accountnumber . '</b><br>
+                             <b>Password: ' . $cpassword . '</b><br>
+                             <b>Secret Code: ' . $secretCode . '</b><br>
                           <hr>
 
-                        <p>For more detailed information about any of our products or services, please refer to our website or visit any of our convenient locations. You may contact us by phone at '.$sitephone.'.
+                        <p>For more detailed information about any of our products or services, please refer to our website or visit any of our convenient locations. You may contact us by phone at ' . $sitephone . '.
                           </p>
                           <p>
-                        '.$sitename.' is a full service, local and International financial institution. Our decisions are made right here, with the community’s members best interest in mind. We are concerned about what is best for you!</p>
+                        ' . $sitename . ' is a full service, local and International financial institution. Our decisions are made right here, with the community’s members best interest in mind. We are concerned about what is best for you!</p>
                           <table class="body-sub" role="presentation">
                           <tr>
                             <td>
                               <p class="f-fallback sub">If you’re having trouble with the button above, copy and paste the URL below into your web browser.</p>
-                              <p class="f-fallback sub" ><a style="font-size:12px;" href="'.$auth_url.'">'.$auth_url.'</a></p>
+                              <p class="f-fallback sub" ><a style="font-size:12px;" href="' . $auth_url . '">' . $auth_url . '</a></p>
                             </td>
                           </tr>
                         </table>
@@ -628,10 +683,10 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
                 <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                   <tr>
                     <td class="content-cell" align="center">
-                      <p class="f-fallback sub align-center">&copy; '. date("Y").' '.$sitename.' All rights reserved.</p>
+                      <p class="f-fallback sub align-center">&copy; ' . date("Y") . ' ' . $sitename . ' All rights reserved.</p>
                       <p class="f-fallback sub align-center">
-                        '.$shortname.', LLC
-                        <br>'.$siteaddress.'
+                        ' . $shortname . ', LLC
+                        <br>' . $siteaddress . '
                       </p>
                     </td>
                   </tr>
@@ -644,24 +699,20 @@ $mail->Body='<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "htt
     </table>
   </body>
 </html>';
-if(!$mail->Send())
- {  
+  if (!$mail->Send()) {
 
     echo "<script>
                Swal.fire('Successful!', 'User account have been successfully registered.', 'success');
       </script>";
-       $query= $conn->query("UPDATE users SET email_verify = '1', email_code = '$num' WHERE accountnumber ='$accountnumber'");
-       echo "<script>window.location.href='../admin/user_profile?id=$id';</script>";
- }
-else
-{
-  echo"
+    $query = $conn->query("UPDATE users SET email_verify = '1', email_code = '$num' WHERE accountnumber ='$accountnumber'");
+    echo "<script>window.location.href='../admin/user_profile?id=$id';</script>";
+  } else {
+    echo "
          <script>
-               Swal.fire('Successful!', 'User account have been successfully registered, A verification email have been forwarded to the user email address (".$email.").', 'success');
+               Swal.fire('Successful!', 'User account have been successfully registered, A verification email have been forwarded to the user email address (" . $email . ").', 'success');
       </script>
    ";
-   $queryy= $conn->query("UPDATE users SET email_code = '$num' WHERE accountnumber ='$accountnumber'");
-   echo "<script>window.location.href='../admin/user_profile?id=$id';</script>";
-}
-
+    $queryy = $conn->query("UPDATE users SET email_code = '$num' WHERE accountnumber ='$accountnumber'");
+    echo "<script>window.location.href='../admin/user_profile?id=$id';</script>";
+  }
 }
